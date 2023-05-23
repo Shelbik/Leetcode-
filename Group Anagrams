@@ -1,0 +1,30 @@
+import java.util.*;
+
+    class Solution {
+        public List<List<String>> groupAnagrams(String[] strs) {
+            List<List<String>> result = new ArrayList<>();
+            Map<String, List<String>> anagramMap = new HashMap<>();
+
+            for (String word : strs) {
+                String sortedWord = sortWord(word);
+                List<String> group = anagramMap.getOrDefault(sortedWord, new ArrayList<>());
+                group.add(word);
+                anagramMap.put(sortedWord, group);
+            }
+
+            for (String sortedWord : anagramMap.keySet()) {
+                result.add(anagramMap.get(sortedWord));
+            }
+
+            return result;
+        }
+
+        private String sortWord(String word) {
+            char[] chars = word.toCharArray();
+            Arrays.sort(chars);
+            return new String(chars);
+        }
+    }
+
+
+
