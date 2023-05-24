@@ -1,0 +1,41 @@
+import java.util.HashSet;
+import java.util.Set;
+
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        int n = board.length;
+
+        // Проверка каждой строки и столбца
+        for (int i = 0; i < n; i++) {
+            Set<Character> row = new HashSet<>();
+            Set<Character> column = new HashSet<>();
+            for (int j = 0; j < n; j++) {
+                char valueRow = board[i][j];
+                char valueColumn = board[j][i];
+                if (valueRow != '.' && !row.add(valueRow)) {
+                    return false; // Найдено повторение в строке
+                }
+                if (valueColumn != '.' && !column.add(valueColumn)) {
+                    return false; // Найдено повторение в столбце
+                }
+            }
+        }
+
+        // Проверка каждого подквадрата 3x3
+        for (int i = 0; i < n; i += 3) {
+            for (int j = 0; j < n; j += 3) {
+                Set<Character> square = new HashSet<>();
+                for (int row = i; row < i + 3; row++) {
+                    for (int col = j; col < j + 3; col++) {
+                        char value = board[row][col];
+                        if (value != '.' && !square.add(value)) {
+                            return false; // Найдено повторение в подквадрате
+                        }
+                    }
+                }
+            }
+        }
+
+        return true; // Все проверки пройдены успешно
+    }
+}
